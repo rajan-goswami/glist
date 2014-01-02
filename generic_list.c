@@ -99,7 +99,7 @@ static const struct generic_list_service g_list_service = {
 /* A map from list index -> allocated list address
  *      0 -> 0x20000000      
  *      1 -> 0x20000004
- * 2 -> 0x20000008 etc.
+ *      2 -> 0x20000008 etc.
  */
 static struct {
     pgeneric_list_t list_addr; /* allocated linked list address */
@@ -313,20 +313,16 @@ static void reverse(unsigned int list_id)
     if (CHECK_NULL(p_list) || !(p_list->node_count))
         return;
 
-    plist_node_t node_addr_array[p_list->node_count]; /* hold node addresses */
-    memset(node_addr_array, 0, (size_t) (sizeof (plist_node_t) * p_list->node_count));
-    if (CHECK_NOT_NULL(node_addr_array)) {
-        register unsigned int i = 0;
-        plist_node_t temp = p_list->phead;
-        for (; CHECK_NOT_NULL(temp); temp = temp->next, i++)
-            node_addr_array[i] = temp;
-        i--;
-        for (; i > 0; i--)
-            node_addr_array[i]->next = (plist_node_t) node_addr_array[i - 1];
+    plist_node_t prev = NULL, temp = NULL;
+    
+    do {
+        prev = p_list->phead;
+        p_list->phead = prev->next;
+        prev->next = temp;
+        temp = prev;
+    } while (p_list->phead != NULL);
 
-        node_addr_array[0]->next = NULL;
-        p_list->phead = node_addr_array[p_list->node_count - 1];
-    }
+    p_list->phead = prev; 
 }
 
 static void print_list(unsigned int list_id)
@@ -428,7 +424,7 @@ static pgeneric_list_t get_list_from_allotted_list(unsigned int index)
 const struct generic_list_service * glist_create_list_service(void)
 {
     // Do clean up required, ideally this function should be called only once
-    clean_allotted_list();
+    // clean_allotted_list();
 
     return &g_list_service;
 }

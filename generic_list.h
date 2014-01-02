@@ -16,7 +16,7 @@
  * 
  *
  * Created on 21 July, 2013, 10:49 PM
- * This list should go as a statically linked library
+ * generic list implementation in C. It can store hybrid data.
  * 
  */
 
@@ -93,7 +93,7 @@ extern "C" {
          * @param out parameter {@link Data} at specified index
          * @return 0 if error/data not found, 1 if success.
          */
-        int (*get_data) (unsigned int, unsigned int, data_t *pData);
+        int (*get_data) (unsigned int, unsigned int, data_t *);
 
         /**
          * Delete a node from list
@@ -103,7 +103,7 @@ extern "C" {
          *         valid {@link Data} deleted from list, NULL if not deleted.
          * @return 0 if error or node not found, 1 if success.
          */
-        int (*delete_node) (unsigned int, unsigned int, data_t *pData);
+        int (*delete_node) (unsigned int, unsigned int, data_t *);
 
         /**
          * Empty the list. As you anticipate this function will not 

@@ -55,6 +55,8 @@
       <compileType>
         <cTool>
           <developmentMode>5</developmentMode>
+          <commandlineTool>gcc</commandlineTool>
+          <warningLevel>2</warningLevel>
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
@@ -64,6 +66,7 @@
         </fortranCompilerTool>
         <asmTool>
           <developmentMode>5</developmentMode>
+          <warningLevel>2</warningLevel>
         </asmTool>
         <archiverTool>
         </archiverTool>

@@ -67,7 +67,7 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libglist.a: ${OBJECTFILES}
 ${OBJECTDIR}/generic_list.o: generic_list.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.c) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/generic_list.o generic_list.c
+	$(COMPILE.c) -O2 -Wall -MMD -MP -MF $@.d -o ${OBJECTDIR}/generic_list.o generic_list.c
 
 # Subprojects
 .build-subprojects:
