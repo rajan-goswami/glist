@@ -37,7 +37,7 @@ extern "C" {
      * data.
      */
     typedef struct _data {
-        void *p; // Data Pointer
+        const void *p; // Data Pointer
         unsigned int type_id; // Type id of Data
     } data_t, *pdata_t;
 
@@ -93,7 +93,7 @@ extern "C" {
          * @param out parameter {@link Data} at specified index
          * @return 0 if error/data not found, 1 if success.
          */
-        int (*get_data) (unsigned int, unsigned int, data_t *);
+        unsigned int (*get_data) (unsigned int, unsigned int, data_t *);
 
         /**
          * Delete a node from list
@@ -103,12 +103,12 @@ extern "C" {
          *         valid {@link Data} deleted from list, NULL if not deleted.
          * @return 0 if error or node not found, 1 if success.
          */
-        int (*delete_node) (unsigned int, unsigned int, data_t *);
+        unsigned int (*delete_node) (unsigned int, unsigned int, data_t *);
 
         /**
          * Empty the list. As you anticipate this function will not 
          * free {@link Data} objects. That is upto client. so it is better to 
-         * call delete_node and free returned Data. 
+         * call delete_node and free returned Data.
          * list identifier will be still valid.
          * @param list identifier
          */
@@ -146,7 +146,7 @@ extern "C" {
          * @param list id
          * @return return 1 if list id is Valid, 0 otherwise
          */
-        int (*is_valid_list_id) (unsigned int);
+        unsigned int (*is_valid_list_id) (unsigned int);
 
         /**
          * Returns size of list.

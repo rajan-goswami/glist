@@ -61,20 +61,20 @@ static plist_node_t create_new_node(data_t data);
 static unsigned int create_empty_list(void);
 static int insert(unsigned int list_id, data_t data);
 static int insert_at(unsigned int list_id, unsigned int index, data_t data);
-static int get_data(unsigned int list_id, unsigned int index, data_t *pData);
-static int delete_node(unsigned int list_id, unsigned int index, data_t *pData);
+static unsigned int get_data(unsigned int list_id, unsigned int index, data_t *pData);
+static unsigned int delete_node(unsigned int list_id, unsigned int index, data_t *pData);
 static void clear(unsigned int list_id);
 static void delete_list(unsigned int list_id);
 static void edit_node(unsigned int list_id, unsigned int index, data_t data);
 static void reverse(unsigned int list_id);
 static void print_list(unsigned int list_id);
-static int is_valid_list_id(unsigned int list_id);
+static unsigned int is_valid_list_id(unsigned int list_id);
 static int size(unsigned int list_id);
 static int append(unsigned int list_1_id, unsigned int list_2_id);
 
 static unsigned int add_list_to_allotted_list(const pgeneric_list_t pList);
 static void remove_list_from_allotted_list(const pgeneric_list_t pList);
-static void clean_allotted_list();
+static void clean_allotted_list(void);
 static pgeneric_list_t get_list_from_allotted_list(unsigned int index);
 
 //=====================================
@@ -190,7 +190,7 @@ static int insert_at(unsigned int list_id, unsigned int index, data_t data)
     return 0;
 }
 
-static int get_data(unsigned int list_id, unsigned int index, data_t *pData)
+static unsigned int get_data(unsigned int list_id, unsigned int index, data_t *pData)
 {
 
     pgeneric_list_t p_list = get_list_from_allotted_list(list_id);
@@ -213,7 +213,7 @@ static int get_data(unsigned int list_id, unsigned int index, data_t *pData)
     return 1;
 }
 
-static int delete_node(unsigned int list_id, unsigned int index, data_t *pData)
+static unsigned int delete_node(unsigned int list_id, unsigned int index, data_t *pData)
 {
 
     pgeneric_list_t p_list = get_list_from_allotted_list(list_id);
@@ -340,7 +340,7 @@ static void print_list(unsigned int list_id)
     printf("End\n");
 }
 
-static int is_valid_list_id(unsigned int list_id)
+static unsigned int is_valid_list_id(unsigned int list_id)
 {
     pgeneric_list_t p_list = get_list_from_allotted_list(list_id);
     return CHECK_NULL(p_list) ? 0 : 1;
@@ -385,7 +385,7 @@ static int append(unsigned int list_1_id, unsigned int list_2_id)
     return 1;
 }
 
-static void clean_allotted_list()
+static void clean_allotted_list(void)
 {
     // Re-initiate g_allotted_lists book
     memset((void *) &g_allotted_lists, 0, sizeof (g_allotted_lists));
