@@ -138,20 +138,10 @@ static int insert(unsigned int list_id, data_t data)
     if (CHECK_NULL(node))
         return -1;
 
-#if !FAST_INSERT_OPERATION
-    if (!p_list->node_count) {
-        p_list->phead = node;
-    } else {
-        plist_node_t temp = p_list->phead;
-        for (; temp->next != NULL; temp = temp->next);
-        temp->next = node;
-    }
-    p_list->node_count++;
-#else
     node->next = p_list->phead;
     p_list->phead = node;
     p_list->node_count++;
-#endif    
+
     return 0;
 }
 
@@ -164,26 +154,17 @@ static int insert_at(unsigned int list_id, unsigned int index, data_t data)
             (index > p_list->node_count)))
         return -1;
 
-#if !FAST_INSERT_OPERATION
-    if (index == 0)
-        return insert(list_id, data);
-#else    
     if (index == p_list->node_count)
         return insert(list_id, data);
-#endif
 
     plist_node_t node = create_new_node(data);
     if (CHECK_NULL(node))
         return -1;
 
     plist_node_t temp = p_list->phead;
-#if !FAST_INSERT_OPERATION
-    for (; index-- > 0; temp = temp->next)
-        ;
-#else
     for (index = p_list->node_count - (index + 1); index-- > 0; temp = temp->next)
         ;
-#endif
+
     node->next = temp->next;
     temp->next = node;
     p_list->node_count++;
@@ -201,13 +182,9 @@ static unsigned int get_data(unsigned int list_id, unsigned int index, data_t *p
         return 0;
 
     plist_node_t temp = p_list->phead;
-#if !FAST_INSERT_OPERATION    
-    for (; index-- > 0; temp = temp->next)
-        ;
-#else
     for (index = p_list->node_count - (index + 1); index-- > 0; temp = temp->next)
         ;
-#endif
+
     (*pData).p = temp->data.p;
     (*pData).type_id = temp->data.type_id;
     return 1;
@@ -224,20 +201,11 @@ static unsigned int delete_node(unsigned int list_id, unsigned int index, data_t
         return 0;
 
     plist_node_t temp = p_list->phead;
-#if !FAST_INSERT_OPERATION    
-    if (index == 0) {
-#else
     if (index == (p_list->node_count - 1)) {
-#endif
         p_list->phead = temp->next;
     } else {
-#if !FAST_INSERT_OPERATION
-        for (; --index > 0; temp = temp->next)
-            ;
-#else
         for (index = p_list->node_count - (index + 1); --index > 0; temp = temp->next)
             ;
-#endif        
         plist_node_t prev_node = temp;
         temp = temp->next;
         prev_node->next = temp->next;
@@ -293,13 +261,9 @@ static void edit_node(unsigned int list_id, unsigned int index, data_t data)
         return;
 
     plist_node_t temp = p_list->phead;
-#if !FAST_INSERT_OPERATION    
-    for (; index-- > 0; temp = temp->next)
-        ;
-#else
     for (index = p_list->node_count - (index + 1); index-- > 0; temp = temp->next)
         ;
-#endif
+
     temp->data.p = data.p;
     temp->data.type_id = data.type_id;
 
@@ -314,7 +278,7 @@ static void reverse(unsigned int list_id)
         return;
 
     plist_node_t prev = NULL, temp = NULL;
-    
+
     do {
         prev = p_list->phead;
         p_list->phead = prev->next;
@@ -322,7 +286,7 @@ static void reverse(unsigned int list_id)
         temp = prev;
     } while (p_list->phead != NULL);
 
-    p_list->phead = prev; 
+    p_list->phead = prev;
 }
 
 static void print_list(unsigned int list_id)
@@ -360,14 +324,6 @@ static int append(unsigned int list_1_id, unsigned int list_2_id)
     if (CHECK_NULL(p_list_1) || CHECK_NULL(p_list_2))
         return 0;
 
-#if! FAST_INSERT_OPERATION
-    if (CHECK_NOT_NULL(p_list_1->phead)) {
-        plist_node_t temp = p_list_1->phead;
-        for (; CHECK_NOT_NULL(temp->next); temp = temp->next)
-            ;
-        temp->next = pList_2->phead;
-    }
-#else
     if (CHECK_NOT_NULL(p_list_2->phead)) {
         plist_node_t temp = p_list_2->phead;
         for (; CHECK_NOT_NULL(temp->next); temp = temp->next)
@@ -375,7 +331,6 @@ static int append(unsigned int list_1_id, unsigned int list_2_id)
         temp->next = p_list_1->phead;
         p_list_1->phead = p_list_2->phead;
     }
-#endif   
     p_list_1->node_count += p_list_2->node_count;
 
     free(p_list_2);
