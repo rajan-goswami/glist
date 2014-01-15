@@ -3,15 +3,9 @@
 -----
 
 
-----------
-
-
 This is generic list library written in C. It is not generic in strict sense and can never be so in C. However it is a data structure carrying client provided type information of data. In that way, client is in charge of inserting [Data + Type] node into list. All list functions insert, delete, edit, clear etc. functions are supported through a List Service.
 
 Client can store hybrid data inside list, but they should be aware of data type of data they are dealing with. It hides the complexity of list implementation and gives client a token to work with the list. To operate on the list, client has to use given token (an integer). Client must free the resources after using the list.
-
-
-----------
 
 
 **Usage**
