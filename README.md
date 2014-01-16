@@ -1,4 +1,3 @@
-
 **glist**
 -----
 
@@ -22,15 +21,15 @@ Client can store hybrid data inside list, but they should be aware of data type 
 
  - Creation of Data
  
-> `data_t data;`
-> 
->  `data.type_id = INT; // INT is type-id of int`
-> 
->  `int *ii = (int *) calloc((size_t) 1, sizeof (int));`
-> 
->  `*ii = 10;`
-> 
->  `data.p = ii;`
+ ```data_t data;
+ 
+   data.type_id = INT; // INT is type-id of int
+ 
+   int *ii = (int *) calloc((size_t) 1, sizeof (int));
+ 
+   *ii = 10;
+ 
+   data.p = ii;```
 
  - Inserting data
 
