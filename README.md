@@ -11,17 +11,19 @@ Client can store hybrid data inside list, but they should be aware of data type 
 ---------
 
  - Get List service handle
-
->  `struct generic_list_service *list_service =
-> glist_create_list_service();`
+ ```
+ struct generic_list_service *list_service =
+ glist_create_list_service();
+ ```
 
  - Creating a New List
-
-> `unsigned int list_id = list_service->create_empty_list();`
+  ```
+  unsigned int list_id = list_service->create_empty_list();
+  ```
 
  - Creation of Data
- 
- ```data_t data;
+   ```
+   data_t data;
  
    data.type_id = INT; // INT is type-id of int
  
@@ -29,24 +31,28 @@ Client can store hybrid data inside list, but they should be aware of data type 
  
    *ii = 10;
  
-   data.p = ii;```
+   data.p = ii;
+   ```
 
  - Inserting data
-
-> `int i = list_service->insert(list_id, data)`
+  ```
+  int i = list_service->insert(list_id, data)
+  ```
 
  - Deleting data
+  ```
+  data_t data;
 
-> `data_t data;`
+  list_service->delete_node(list_id, 0, &data)
 
-> `list_service->delete_node(list_id, 0, &data)`
-
-> `free(data.p);`
-
+  free(data.p);
+  ```
+  
  - Retrieve data
- 
-> `data_t data;`
-
-> `list_service->get_data(list_id, index, &data)`
-
-> `printf("\tData at %d index : %d \n\n", index, *((int *) data.p));`
+  ```
+  data_t data;
+  
+  list_service->get_data(list_id, index, &data)
+  
+  printf("\tData at %d index : %d \n\n", index, *((int *) data.p));
+  ```
